@@ -1,5 +1,7 @@
 # dpkg-review
 
+WIP
+
 Current vim/neovim plugin offers an archive-like review of debian packages in
 vim
 
