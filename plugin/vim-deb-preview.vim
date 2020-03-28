@@ -9,20 +9,25 @@ if exists('g:loaded_deb_preview') || &compatible
 endif
 let g:loaded_deb_preview = 1
 
+if !has("unix")
+    echoerr "Plugin must be executed on linux - sorry"
+    finish
+endif
+
 let s:save_cpo = &cpoptions
 set cpoptions&vim
 
-let g:vim_deb_preview_glob = "*.deb"
+" ------------------------------------------------------------------------------
+" Options to tweak {{{1
+let g:debpreview_overwrite = get(g:, "g:debpreview_overwrite", 0)
+let g:debpreview_newdebfile_ext = get(g:, "g:debpreview_newdebfile_ext", ".new")
+let g:debpreview_glob = get(g:, "g:debpreview_glob", "*.deb,*" . g:debpreview_newdebfile_ext)
 
 " ------------------------------------------------------------------------------
 "  autocommands {{{1
 augroup deb
     au!
-    if has("unix")
-        " au BufReadCmd  call deb#Read(expand("<amatch>"), 1)
-    endif
-
-    exe "au BufReadCmd " . g:vim_deb_preview_glob.' call deb#Browse(expand("<amatch>"))'
+    exe "au BufReadCmd " . g:debpreview_glob.' call deb#Browse(expand("<amatch>"))'
 augroup END
 
 " ------------------------------------------------------------------------------
