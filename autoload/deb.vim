@@ -15,7 +15,6 @@ fun! deb#CheckPrerequisites() abort
         echoerr("Please install awk first.")
         return 0
     endif
-
     return 1
 endfunction
 
@@ -77,7 +76,7 @@ endfunction
 
 " ------------------------------------------------------------------------------
 " Check if needed - then create debian package {{{1
-fun deb#CheckNCreateDebPackage(in_rootdir, out_deb, orig_hash) abort
+fun! deb#CheckNCreateDebPackage(in_rootdir, out_deb, orig_hash) abort
     let s:curr_hash = deb#CalcDebDirHash(a:in_rootdir)
     if s:curr_hash ==# a:orig_hash
         sleep 500m
