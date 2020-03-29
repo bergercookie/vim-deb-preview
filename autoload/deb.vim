@@ -1,6 +1,6 @@
 " ------------------------------------------------------------------------------
-"" Utility functions {{{1
-fun! deb#CheckPrerequisites()
+" Utility functions {{{1
+fun! deb#CheckPrerequisites() abort
     if !executable("dpkg-deb")
         echoerr("Please install dpkg-deb first.")
         return 0  " falsy
@@ -21,7 +21,7 @@ endfunction
 
 command! Echo echohl WarningMsg | echom <q-args> | echohl None
 
-fun! deb#GetOutputName(name)
+fun! deb#GetOutputName(name) abort
     if g:debpreview_overwrite
         return a:name
     else
@@ -30,19 +30,19 @@ fun! deb#GetOutputName(name)
     endif
 endfunction
 
-fun! deb#CalcDebDirHash(dir)
+fun! deb#CalcDebDirHash(dir) abort
     let cmd = "find " . a:dir . " -type f -exec md5sum {} \\; | sort -k 2 | md5sum"
     return system(cmd)
 endfunction
 
-fun! deb#CalcFileHash(file)
+fun! deb#CalcFileHash(file) abort
     let cmd = "md5sum" . a:file
     return system(cmd)
 endfunction
 
 " ------------------------------------------------------------------------------
-" view contents - without manually unpacking {{{1
-fun! deb#Browse(deb_file)
+" View contents - without manually unpacking {{{1
+fun! deb#Browse(deb_file) abort
     if !deb#CheckPrerequisites()
         return 0
     endif
@@ -64,8 +64,8 @@ fun! deb#Browse(deb_file)
 endfunction
 
 " ------------------------------------------------------------------------------
-" create debian package {{{1
-fun! deb#CreateDebPackage(in_rootdir, out_deb)
+" Create debian package {{{1
+fun! deb#CreateDebPackage(in_rootdir, out_deb) abort
     call system("dpkg-deb -b " . a:in_rootdir . " " . " " . a:out_deb)
     let md5sums_file = a:in_rootdir . "/DEBIAN/md5sums"
     if filereadable(md5sums_file)
@@ -76,8 +76,8 @@ fun! deb#CreateDebPackage(in_rootdir, out_deb)
 endfunction
 
 " ------------------------------------------------------------------------------
-" check if needed - then create debian package {{{1
-fun deb#CheckNCreateDebPackage(in_rootdir, out_deb, orig_hash)
+" Check if needed - then create debian package {{{1
+fun deb#CheckNCreateDebPackage(in_rootdir, out_deb, orig_hash) abort
     let s:curr_hash = deb#CalcDebDirHash(a:in_rootdir)
     if s:curr_hash ==# a:orig_hash
         sleep 500m
