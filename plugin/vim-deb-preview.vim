@@ -19,8 +19,15 @@ set cpoptions&vim
 
 " ------------------------------------------------------------------------------
 " Options to tweak {{{1
+" Set to 1 to overwrite .deb file in case of modifications
 let g:debpreview_overwrite = get(g:, "g:debpreview_overwrite", 0)
+" Set to the desired extension. deb-preview will use this extension when
+" repackaging in case of modifications. In effect only when
+" g:debpreview_overwrite if 0.
 let g:debpreview_newdebfile_ext = get(g:, "g:debpreview_newdebfile_ext", ".new")
+
+" ------------------------------------------------------------------------------
+" Internal Options {{{1
 let g:debpreview_glob = get(g:, "g:debpreview_glob", "*.deb,*" . g:debpreview_newdebfile_ext)
 
 " ------------------------------------------------------------------------------
