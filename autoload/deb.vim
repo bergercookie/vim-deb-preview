@@ -65,13 +65,16 @@ endfunction
 " ------------------------------------------------------------------------------
 " Create debian package {{{1
 fun! deb#CreateDebPackage(in_rootdir, out_deb) abort
-    call system("dpkg-deb -b " . a:in_rootdir . " " . " " . a:out_deb)
     let md5sums_file = a:in_rootdir . "/DEBIAN/md5sums"
     if filereadable(md5sums_file)
         sleep 500m
         Echo "Rewriting md5sums..."
         call system("md5sum `find " . a:in_rootdir . " -type f | awk 'source/.\// { print substr($0, 3) }'` > " . a:in_rootdir . "/DEBIAN/md5sums")
     end
+
+    sleep 500m
+    Echo "Repacking debian package"
+    call system("fakeroot dpkg-deb -b " . a:in_rootdir . " " . " " . a:out_deb)
 endfunction
 
 " ------------------------------------------------------------------------------
@@ -84,8 +87,6 @@ fun! deb#CheckNCreateDebPackage(in_rootdir, out_deb, orig_hash) abort
         return
     endif
 
-    sleep 500m
-    Echo "Repacking debian package"
     call deb#CreateDebPackage(a:in_rootdir, a:out_deb)
 
     " move it someplace else

@@ -86,7 +86,15 @@ Platform: Linux Debian Flavors (Ubuntu, Debian etc.)
 debugstring depends on the following binaries on linux:
 
 * `dpkg-deb`
-* `md5sums`
+* `fakeroot`
+* `awk`
+* `md5sum`
+
+On ubuntu this should take care of the installation:
+
+```
+sudo apt install dpkg-deb fakeroot awk md5sum
+```
 
 ## License
 
