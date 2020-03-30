@@ -97,6 +97,7 @@ file
 ## TODO
 
 - [ ] Handle error codes from `system()` commands
+- [ ] Use fakeroot - handle permissions issue and verify it's working fine.
 
 ## Self Promotion
 
