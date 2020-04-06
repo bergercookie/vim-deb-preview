@@ -61,6 +61,25 @@ let g:debpreview_overwrite = 1
 let g:debpreview_newdebfile_ext =".new"
 ```
 
+## FAQ
+
+### How do I navigate the debian package, edit files, copy, rename files etc?
+
+Spend some time familiarising with
+[netrw](https://www.vim.org/scripts/script.php?script_id=1075). It's the default
+vim tool for navigating and manipulating directories. Here's an excellent
+cheatsheet with many of its options:
+https://gist.github.com/danidiaz/37a69305e2ed3319bfff9631175c5d0f
+
+### I just don't like navigating the debian package with `netrw`
+
+You can always switch to using ranger instead. Install
+[Ranger](https://en.wikipedia.org/wiki/Ranger_(file_manager)) as well as the
+[ranger.vim](https://github.com/francoiscabrol/ranger.vim) plugin. Make sure you
+configure it to [open directories with ranger.vim by
+default](https://github.com/francoiscabrol/ranger.vim#opening-ranger-instead-of-netrw-when-you-open-a-directory)
+and `vim-deb-preview` will use ranger.
+
 
 ## Installation
 
